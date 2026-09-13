@@ -63,7 +63,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="border-t border-surface-light mt-8 pt-8 text-center text-foreground/50">
-          <p>&copy; {new Date().getFullYear()} UnGone. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} UnGone. All rights reserved. Making you impossible to ignore.</p>
         </div>
       </div>
     </footer>
