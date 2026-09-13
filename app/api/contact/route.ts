@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { supabase } from '@/lib/supabase';
+import { resend } from '@/lib/resend';
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -48,7 +49,33 @@ export async function POST(request: NextRequest) {
       console.log('Supabase not configured, skipping database storage');
     }
     
-    // TODO: Send email notification (Resend/Postmark)
+    // Send email notification if configured
+    if (resend) {
+      try {
+        await resend.emails.send({
+          from: 'UnGone <onboarding@resend.dev>',
+          to: 'your-email@example.com', // Replace with your email
+          subject: `New ${validatedData.leadType === 'audit_request' ? 'Growth Audit Request' : 'Contact Form Submission'}`,
+          html: `
+            <h2>New Lead Received</h2>
+            <p><strong>Name:</strong> ${validatedData.name}</p>
+            <p><strong>Email:</strong> ${validatedData.email}</p>
+            <p><strong>Phone:</strong> ${validatedData.phone || 'Not provided'}</p>
+            <p><strong>Company:</strong> ${validatedData.company || 'Not provided'}</p>
+            <p><strong>Service Interested:</strong> ${validatedData.service || 'Not specified'}</p>
+            <p><strong>Type:</strong> ${validatedData.leadType}</p>
+            <p><strong>Message:</strong></p>
+            <p>${validatedData.message}</p>
+          `,
+        });
+      } catch (emailError) {
+        console.error('Email sending failed:', emailError);
+        // Don't fail the request if email fails
+      }
+    } else {
+      console.log('Resend not configured, skipping email notification');
+    }
+    
     console.log('Lead received:', validatedData);
     
     return NextResponse.json(
