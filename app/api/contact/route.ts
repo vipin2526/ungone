@@ -19,29 +19,33 @@ export async function POST(request: NextRequest) {
     // Validate input
     const validatedData = contactSchema.parse(body);
     
-    // Store in database
-    const { error: dbError } = await supabase
-      .from('leads')
-      .insert({
-        name: validatedData.name,
-        email: validatedData.email,
-        phone: validatedData.phone || null,
-        company: validatedData.company || null,
-        service_interested: validatedData.service || null,
-        message: validatedData.message,
-        lead_type: validatedData.leadType,
-        source_page: request.headers.get('referer') || '/',
-      });
+    // Store in database if configured
+    if (supabase) {
+      const { error: dbError } = await supabase
+        .from('leads')
+        .insert({
+          name: validatedData.name,
+          email: validatedData.email,
+          phone: validatedData.phone || null,
+          company: validatedData.company || null,
+          service_interested: validatedData.service || null,
+          message: validatedData.message,
+          lead_type: validatedData.leadType,
+          source_page: request.headers.get('referer') || '/',
+        });
 
-    if (dbError) {
-      console.error('Database error:', dbError);
-      return NextResponse.json(
-        { 
-          success: false, 
-          message: 'Failed to save your information. Please try again.' 
-        },
-        { status: 500 }
-      );
+      if (dbError) {
+        console.error('Database error:', dbError);
+        return NextResponse.json(
+          { 
+            success: false, 
+            message: 'Failed to save your information. Please try again.' 
+          },
+          { status: 500 }
+        );
+      }
+    } else {
+      console.log('Supabase not configured, skipping database storage');
     }
     
     // TODO: Send email notification (Resend/Postmark)
