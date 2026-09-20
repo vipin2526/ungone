@@ -80,18 +80,18 @@ export default function Services() {
               Comprehensive solutions designed to accelerate your growth and make your business impossible to ignore.
             </p>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {services.map((service, index) => (
-                <div key={index} className="bg-surface p-8 rounded-2xl border border-surface-light hover:border-primary/50 transition-all group">
-                  <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
+                <div key={index} className="glass-card p-6 rounded-xl hover:border-primary/50 transition-colors">
+                  <h3 className="text-xl font-bold text-foreground mb-3">
                     {service.title}
                   </h3>
-                  <p className="text-foreground/70 mb-6">
+                  <p className="text-foreground/70 mb-4">
                     {service.description}
                   </p>
-                  <ul className="space-y-2">
+                  <ul className="space-y-2 text-sm text-foreground/60">
                     {service.details.map((detail, idx) => (
-                      <li key={idx} className="text-foreground/60 flex items-start">
+                      <li key={idx} className="flex items-start">
                         <span className="text-primary mr-2">•</span>
                         {detail}
                       </li>
