@@ -3,8 +3,8 @@
 :root {
   --background: #ffffff;
   --foreground: #0a0a0a;
-  --primary: #10b981;
-  --primary-dark: #059669;
+  --primary: #CC202E;
+  --primary-dark: #a31a25;
   --surface: #f5f5f5;
   --surface-light: #e5e5e5;
 }
@@ -12,8 +12,8 @@
 [data-theme="dark"] {
   --background: #0a0a0a;
   --foreground: #ededed;
-  --primary: #10b981;
-  --primary-dark: #059669;
+  --primary: #CC202E;
+  --primary-dark: #a31a25;
   --surface: #1a1a1a;
   --surface-light: #262626;
 }
