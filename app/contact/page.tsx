@@ -227,7 +227,7 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="bg-surface-light p-8 rounded-2xl border border-primary/20">
+            <div className="glass-card p-8 rounded-2xl border border-primary/20">
               <h3 className="text-2xl font-bold text-foreground mb-6 text-center">Contact Information</h3>
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="flex items-start space-x-4">

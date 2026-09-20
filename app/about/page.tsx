@@ -60,7 +60,7 @@ export default function About() {
               </h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {values.map((value, index) => (
-                  <div key={index} className="bg-surface p-6 rounded-xl border border-surface-light hover:border-primary/50 transition-colors text-center">
+                  <div key={index} className="glass-card p-6 rounded-xl hover:border-primary/50 transition-colors text-center">
                     <h3 className="text-xl font-bold text-foreground mb-3">
                       {value.title}
                     </h3>

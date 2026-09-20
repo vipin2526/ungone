@@ -79,8 +79,8 @@ export default function Home() {
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {services.map((service, index) => (
-                <div key={index} className="bg-surface p-6 rounded-xl border border-surface-light hover:border-primary/50 transition-colors group">
-                  <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+                <div key={index} className="glass-card p-6 rounded-xl hover:border-primary/50 transition-colors">
+                  <h3 className="text-xl font-bold text-foreground mb-3">
                     {service.title}
                   </h3>
                   <p className="text-foreground/70">
