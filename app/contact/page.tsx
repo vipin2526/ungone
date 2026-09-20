@@ -203,7 +203,7 @@ export default function Contact() {
             <h2 className="text-3xl font-bold text-foreground mb-8 text-center">
               Why Get a Growth Audit?
             </h2>
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-8 mb-16">
               <div className="text-center">
                 <div className="text-4xl mb-4">🎯</div>
                 <h3 className="text-xl font-bold text-foreground mb-2">Identify Gaps</h3>
@@ -224,6 +224,51 @@ export default function Contact() {
                 <p className="text-foreground/70">
                   See the path to becoming impossible to ignore
                 </p>
+              </div>
+            </div>
+
+            <div className="bg-surface-light p-8 rounded-2xl border border-primary/20">
+              <h3 className="text-2xl font-bold text-foreground mb-6 text-center">Contact Information</h3>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="flex items-start space-x-4">
+                  <span className="text-2xl">📍</span>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-1">Address</h4>
+                    <p className="text-foreground/70">Gali No 5, Hoshiyarpur, Sector 51, Noida</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <span className="text-2xl">📞</span>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-1">Phone</h4>
+                    <a href="tel:7897891020" className="text-foreground/70 hover:text-primary transition-colors">
+                      7897891020
+                    </a>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <span className="text-2xl">✉️</span>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-1">Email</h4>
+                    <a href="mailto:support@ungone.in" className="text-foreground/70 hover:text-primary transition-colors">
+                      support@ungone.in
+                    </a>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <span className="text-2xl">📱</span>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-1">Social Media</h4>
+                    <div className="space-y-1">
+                      <a href="https://instagram.com/ungone.in" target="_blank" rel="noopener noreferrer" className="text-foreground/70 hover:text-primary transition-colors block">
+                        Instagram: @ungone.in
+                      </a>
+                      <a href="https://youtube.com/@ungone" target="_blank" rel="noopener noreferrer" className="text-foreground/70 hover:text-primary transition-colors block">
+                        YouTube: @ungone
+                      </a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

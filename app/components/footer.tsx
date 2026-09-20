@@ -10,6 +10,30 @@ export default function Footer() {
             <p className="text-foreground/70 mb-4">
               We Make You Impossible to Ignore. From digital invisibility to market leadership.
             </p>
+            <div className="space-y-2 text-foreground/70">
+              <p className="flex items-start">
+                <span className="mr-2">📍</span>
+                <span>Gali No 5, Hoshiyarpur, Sector 51, Noida</span>
+              </p>
+              <p className="flex items-center">
+                <span className="mr-2">📞</span>
+                <span>7897891020</span>
+              </p>
+              <p className="flex items-center">
+                <span className="mr-2">✉️</span>
+                <a href="mailto:support@ungone.in" className="hover:text-primary transition-colors">
+                  support@ungone.in
+                </a>
+              </p>
+            </div>
+            <div className="flex space-x-4 mt-4">
+              <a href="https://instagram.com/ungone.in" target="_blank" rel="noopener noreferrer" className="text-foreground/70 hover:text-primary transition-colors">
+                Instagram
+              </a>
+              <a href="https://youtube.com/@ungone" target="_blank" rel="noopener noreferrer" className="text-foreground/70 hover:text-primary transition-colors">
+                YouTube
+              </a>
+            </div>
           </div>
           <div>
             <h4 className="font-semibold text-foreground mb-4">Quick Links</h4>
