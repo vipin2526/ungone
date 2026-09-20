@@ -55,6 +55,16 @@ export default function About() {
             </div>
 
             <div className="mb-20">
+              <h2 className="text-3xl font-bold text-foreground mb-6 text-center">
+                Founder & CEO
+              </h2>
+              <div className="max-w-2xl mx-auto text-center mb-12">
+                <h3 className="text-2xl font-bold text-primary mb-2">Manishiv Chauhan</h3>
+                <p className="text-foreground/70">
+                  Leading the vision to make businesses impossible to ignore through innovative digital growth strategies.
+                </p>
+              </div>
+
               <h2 className="text-3xl font-bold text-foreground mb-12 text-center">
                 Our Values
               </h2>

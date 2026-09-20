@@ -10,6 +10,9 @@ export default function Footer() {
             <p className="text-foreground/70 mb-4">
               We Make You Impossible to Ignore. From digital invisibility to market leadership.
             </p>
+            <p className="text-foreground/70 mb-4">
+              <span className="font-semibold">Founder & CEO:</span> Manishiv Chauhan
+            </p>
             <div className="space-y-2 text-foreground/70">
               <p className="flex items-start">
                 <span className="mr-2">📍</span>
