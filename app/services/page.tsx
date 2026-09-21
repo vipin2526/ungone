@@ -7,6 +7,7 @@ export default function Services() {
     {
       title: 'Digital Marketing',
       description: 'Comprehensive strategies to boost your online presence across all channels.',
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80',
       details: [
         'SEO & Content Strategy',
         'Social Media Marketing',
@@ -17,6 +18,7 @@ export default function Services() {
     {
       title: 'Branding & Strategy',
       description: 'Build a memorable brand that resonates with your target audience.',
+      image: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&q=80',
       details: [
         'Brand Identity Development',
         'Market Positioning',
@@ -27,6 +29,7 @@ export default function Services() {
     {
       title: 'Performance Marketing',
       description: 'Data-driven campaigns that deliver measurable ROI and growth.',
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80',
       details: [
         'Campaign Optimization',
         'A/B Testing',
@@ -37,6 +40,7 @@ export default function Services() {
     {
       title: 'Customer Acquisition',
       description: 'Targeted approaches to attract and convert ideal customers.',
+      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80',
       details: [
         'Lead Generation',
         'Sales Funnel Design',
@@ -47,6 +51,7 @@ export default function Services() {
     {
       title: 'Web & CRO Optimization',
       description: 'Convert visitors into customers with optimized user experiences.',
+      image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80',
       details: [
         'Website Audits',
         'User Experience Design',
@@ -57,6 +62,7 @@ export default function Services() {
     {
       title: 'Analytics & Growth',
       description: 'Insights that fuel continuous improvement and scalable growth.',
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80',
       details: [
         'Data Analytics Setup',
         'Performance Dashboards',
@@ -82,21 +88,30 @@ export default function Services() {
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {services.map((service, index) => (
-                <div key={index} className="glass-card p-6 rounded-xl hover:border-primary/50 transition-colors">
-                  <h3 className="text-xl font-bold text-foreground mb-3">
-                    {service.title}
-                  </h3>
-                  <p className="text-foreground/70 mb-4">
-                    {service.description}
-                  </p>
-                  <ul className="space-y-2 text-sm text-foreground/60">
-                    {service.details.map((detail, idx) => (
-                      <li key={idx} className="flex items-start">
-                        <span className="text-primary mr-2">•</span>
-                        {detail}
-                      </li>
-                    ))}
-                  </ul>
+                <div key={index} className="glass-card rounded-xl hover:border-primary/50 transition-colors overflow-hidden">
+                  <div className="h-48 overflow-hidden">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-foreground mb-3">
+                      {service.title}
+                    </h3>
+                    <p className="text-foreground/70 mb-4">
+                      {service.description}
+                    </p>
+                    <ul className="space-y-2 text-sm text-foreground/60">
+                      {service.details.map((detail, idx) => (
+                        <li key={idx} className="flex items-start">
+                          <span className="text-primary mr-2">•</span>
+                          {detail}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               ))}
             </div>
