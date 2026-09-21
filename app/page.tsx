@@ -4,12 +4,36 @@ import Link from 'next/link';
 
 export default function Home() {
   const services = [
-    { title: 'Digital Marketing', description: 'Comprehensive strategies to boost your online presence' },
-    { title: 'Branding & Strategy', description: 'Build a memorable brand that resonates' },
-    { title: 'Performance Marketing', description: 'Data-driven campaigns that deliver ROI' },
-    { title: 'Customer Acquisition', description: 'Targeted approaches to attract ideal customers' },
-    { title: 'Web & CRO Optimization', description: 'Convert visitors into customers' },
-    { title: 'Analytics & Growth', description: 'Insights that fuel continuous improvement' },
+    { 
+      title: 'Digital Marketing', 
+      description: 'Comprehensive strategies to boost your online presence',
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80'
+    },
+    { 
+      title: 'Branding & Strategy', 
+      description: 'Build a memorable brand that resonates',
+      image: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&q=80'
+    },
+    { 
+      title: 'Performance Marketing', 
+      description: 'Data-driven campaigns that deliver ROI',
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80'
+    },
+    { 
+      title: 'Customer Acquisition', 
+      description: 'Targeted approaches to attract ideal customers',
+      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80'
+    },
+    { 
+      title: 'Web & CRO Optimization', 
+      description: 'Convert visitors into customers',
+      image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80'
+    },
+    { 
+      title: 'Analytics & Growth', 
+      description: 'Insights that fuel continuous improvement',
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80'
+    },
   ];
 
   const stats = [
@@ -22,23 +46,28 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
-      
+
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto text-center">
-            <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6">
-              We Make You <span className="text-primary">Impossible to Ignore</span>
+        <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 min-h-[600px] flex items-center">
+          <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 bg-gradient-to-br from-background via-background/90 to-background/70"></div>
+            <img
+              src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=1920&q=80"
+              alt="Digital Growth"
+              className="w-full h-full object-cover opacity-20"
+            />
+          </div>
+          <div className="max-w-7xl mx-auto relative z-10">
+            <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6 text-center">
+              We Make You
+              <span className="text-primary block mt-2">Impossible to Ignore</span>
             </h1>
-            <p className="text-xl md:text-2xl text-foreground/70 max-w-3xl mx-auto mb-8">
+            <p className="text-xl text-foreground/70 max-w-3xl mx-auto mb-12 text-center">
               From digital invisibility to market leadership — UnGone builds visibility, drives relevance, and transforms businesses into growth machines.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/contact" className="bg-primary hover:bg-primary-dark text-background px-8 py-4 rounded-full font-semibold text-lg transition-colors">
-                Get a Growth Audit
-              </Link>
-              <Link href="/services" className="border-2 border-primary text-primary hover:bg-primary hover:text-background px-8 py-4 rounded-full font-semibold text-lg transition-colors">
-                Explore Services
+            <div className="text-center">
+              <Link href="/contact" className="bg-primary hover:bg-primary-dark text-background px-8 py-4 rounded-full font-semibold text-lg transition-colors inline-block">
+                Get a Free Growth Audit
               </Link>
             </div>
           </div>
@@ -79,13 +108,22 @@ export default function Home() {
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {services.map((service, index) => (
-                <div key={index} className="glass-card p-6 rounded-xl hover:border-primary/50 transition-colors">
-                  <h3 className="text-xl font-bold text-foreground mb-3">
-                    {service.title}
-                  </h3>
-                  <p className="text-foreground/70">
-                    {service.description}
-                  </p>
+                <div key={index} className="glass-card rounded-xl hover:border-primary/50 transition-colors overflow-hidden">
+                  <div className="h-48 overflow-hidden">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-foreground mb-3">
+                      {service.title}
+                    </h3>
+                    <p className="text-foreground/70">
+                      {service.description}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
