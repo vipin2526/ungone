@@ -29,7 +29,7 @@ export default function Services() {
     {
       title: 'Performance Marketing',
       description: 'Data-driven campaigns that deliver measurable ROI and growth.',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80',
+      image: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=600&q=80',
       details: [
         'Campaign Optimization',
         'A/B Testing',
