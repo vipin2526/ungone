@@ -14,10 +14,10 @@ export default function Home() {
       description: 'Build a memorable brand that resonates',
       image: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&q=80'
     },
-    { 
-      title: 'Performance Marketing', 
+    {
+      title: 'Performance Marketing',
       description: 'Data-driven campaigns that deliver ROI',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80'
+      image: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=600&q=80'
     },
     { 
       title: 'Customer Acquisition', 
