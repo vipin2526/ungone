@@ -2,6 +2,7 @@ import Navigation from './components/navigation';
 import Footer from './components/footer';
 import Link from 'next/link';
 import { FadeIn, SlideUp, ScrollReveal, StaggerContainer, StaggerItem, HoverCard, TapButton } from './components/animations';
+import HeroSlider from './components/hero-slider';
 
 export default function Home() {
   const services = [
@@ -49,36 +50,7 @@ export default function Home() {
       <Navigation />
 
       <main className="flex-1">
-        <section className="relative pt-24 pb-16 px-4 sm:px-6 lg:px-8 min-h-[500px] md:min-h-[600px] flex items-center">
-          <div className="absolute inset-0 z-0">
-            <div className="absolute inset-0 bg-gradient-to-br from-background via-background/90 to-background/70"></div>
-            <img
-              src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=1920&q=80"
-              alt="Digital Growth"
-              className="w-full h-full object-cover opacity-20"
-            />
-          </div>
-          <div className="max-w-7xl mx-auto relative z-10">
-            <FadeIn duration={0.8}>
-              <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-foreground mb-6 text-center">
-                We Make You
-                <span className="text-primary block mt-2">Impossible to Ignore</span>
-              </h1>
-            </FadeIn>
-            <SlideUp delay={0.2} duration={0.8}>
-              <p className="text-lg sm:text-xl text-foreground/70 max-w-3xl mx-auto mb-10 md:mb-12 text-center">
-                From digital invisibility to market leadership — UnGone builds visibility, drives relevance, and transforms businesses into growth machines.
-              </p>
-            </SlideUp>
-            <div className="text-center">
-              <TapButton>
-                <Link href="/contact" className="bg-primary hover:bg-primary-dark text-background px-6 py-3 sm:px-8 sm:py-4 rounded-full font-semibold text-base sm:text-lg transition-colors inline-block">
-                  Get a Free Growth Audit
-                </Link>
-              </TapButton>
-            </div>
-          </div>
-        </section>
+        <HeroSlider />
 
         {/* Problem/Solution Section */}
         <section className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-surface">
