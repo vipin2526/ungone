@@ -217,7 +217,7 @@ export function TapButton({
   onClick?: () => void;
 }) {
   return (
-    <motion.button
+    <motion.div
       whileTap={{ scale: 0.95 }}
       whileHover={{ scale: 1.02 }}
       transition={{ duration: 0.1 }}
@@ -225,6 +225,6 @@ export function TapButton({
       onClick={onClick}
     >
       {children}
-    </motion.button>
+    </motion.div>
   );
 }

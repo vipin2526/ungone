@@ -33,6 +33,7 @@ export async function POST(request: NextRequest) {
           message: validatedData.message,
           lead_type: validatedData.leadType,
           source_page: request.headers.get('referer') || '/',
+          status: 'new',
         });
 
       if (dbError) {
@@ -52,22 +53,91 @@ export async function POST(request: NextRequest) {
     // Send email notification if configured
     if (resend) {
       try {
-        await resend.emails.send({
-          from: 'UnGone <onboarding@resend.dev>',
-          to: 'your-email@example.com', // Replace with your email
-          subject: `New ${validatedData.leadType === 'audit_request' ? 'Growth Audit Request' : 'Contact Form Submission'}`,
-          html: `
-            <h2>New Lead Received</h2>
-            <p><strong>Name:</strong> ${validatedData.name}</p>
-            <p><strong>Email:</strong> ${validatedData.email}</p>
-            <p><strong>Phone:</strong> ${validatedData.phone || 'Not provided'}</p>
-            <p><strong>Company:</strong> ${validatedData.company || 'Not provided'}</p>
-            <p><strong>Service Interested:</strong> ${validatedData.service || 'Not specified'}</p>
-            <p><strong>Type:</strong> ${validatedData.leadType}</p>
-            <p><strong>Message:</strong></p>
-            <p>${validatedData.message}</p>
-          `,
-        });
+        // Fetch notification settings from database
+        const { data: settings } = await supabase
+          .from('admin_settings')
+          .select('key, value')
+          .in('key', ['notification_email', 'notifications_enabled']);
+
+        const settingsMap = new Map(settings?.map(s => [s.key, s.value]) || []);
+        const notificationsEnabled = settingsMap.get('notifications_enabled') === 'true';
+        const notificationEmail = settingsMap.get('notification_email') || 'ungoneofficial@gmail.com';
+
+        if (notificationsEnabled && notificationEmail) {
+          const leadTypeLabel = validatedData.leadType === 'audit_request' ? 'Growth Audit Request' : 'Contact Form Submission';
+          
+          await resend.emails.send({
+            from: 'UnGone <onboarding@resend.dev>',
+            to: notificationEmail,
+            subject: `🔔 New ${leadTypeLabel} from ${validatedData.name}`,
+            html: `
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 10px 10px 0 0; text-align: center;">
+                  <h1 style="color: white; margin: 0; font-size: 28px;">New Lead Received</h1>
+                  <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0 0;">${leadTypeLabel}</p>
+                </div>
+                
+                <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; border: 1px solid #e0e0e0; border-top: none;">
+                  <h2 style="color: #333; margin-top: 0;">Lead Information</h2>
+                  
+                  <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                      <td style="padding: 12px 0; color: #666; font-weight: bold; width: 150px;">Name:</td>
+                      <td style="padding: 12px 0; color: #333;">${validatedData.name}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 12px 0; color: #666; font-weight: bold;">Email:</td>
+                      <td style="padding: 12px 0; color: #333;">
+                        <a href="mailto:${validatedData.email}" style="color: #667eea; text-decoration: none;">${validatedData.email}</a>
+                      </td>
+                    </tr>
+                    ${validatedData.phone ? `
+                    <tr>
+                      <td style="padding: 12px 0; color: #666; font-weight: bold;">Phone:</td>
+                      <td style="padding: 12px 0; color: #333;">${validatedData.phone}</td>
+                    </tr>
+                    ` : ''}
+                    ${validatedData.company ? `
+                    <tr>
+                      <td style="padding: 12px 0; color: #666; font-weight: bold;">Company:</td>
+                      <td style="padding: 12px 0; color: #333;">${validatedData.company}</td>
+                    </tr>
+                    ` : ''}
+                    ${validatedData.service ? `
+                    <tr>
+                      <td style="padding: 12px 0; color: #666; font-weight: bold;">Service Interested:</td>
+                      <td style="padding: 12px 0; color: #333;">${validatedData.service}</td>
+                    </tr>
+                    ` : ''}
+                    <tr>
+                      <td style="padding: 12px 0; color: #666; font-weight: bold;">Type:</td>
+                      <td style="padding: 12px 0;">
+                        <span style="background: ${validatedData.leadType === 'audit_request' ? '#667eea' : '#764ba2'}; color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold;">
+                          ${validatedData.leadType === 'audit_request' ? 'AUDIT REQUEST' : 'CONTACT'}
+                        </span>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <h3 style="color: #333; margin-top: 30px;">Message</h3>
+                  <div style="background: white; padding: 20px; border-left: 4px solid #667eea; border-radius: 4px; margin-top: 10px;">
+                    <p style="color: #555; line-height: 1.6; margin: 0;">${validatedData.message}</p>
+                  </div>
+
+                  <div style="margin-top: 30px; text-align: center;">
+                    <a href="http://localhost:3000/admin/leads" style="background: #667eea; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
+                      View in Admin Panel
+                    </a>
+                  </div>
+
+                  <p style="color: #999; font-size: 12px; text-align: center; margin-top: 30px;">
+                    This email was sent automatically from UnGone contact form
+                  </p>
+                </div>
+              </div>
+            `,
+          });
+        }
       } catch (emailError) {
         console.error('Email sending failed:', emailError);
         // Don't fail the request if email fails
