@@ -9,12 +9,26 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '',
+    countryCode: '+91',
+    phoneNumber: '',
     company: '',
     service: '',
     message: '',
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const countryCodes = [
+    { code: '+91', flag: '🇮🇳', country: 'India' },
+    { code: '+1', flag: '🇺🇸', country: 'USA' },
+    { code: '+971', flag: '🇦🇪', country: 'UAE' },
+    { code: '+44', flag: '🇬🇧', country: 'UK' },
+    { code: '+65', flag: '🇸🇬', country: 'Singapore' },
+    { code: '+61', flag: '🇦🇺', country: 'Australia' },
+    { code: '+1', flag: '🇨🇦', country: 'Canada' },
+    { code: '+49', flag: '🇩🇪', country: 'Germany' },
+    { code: '+33', flag: '🇫🇷', country: 'France' },
+    { code: '+81', flag: '🇯🇵', country: 'Japan' },
+  ];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,7 +40,12 @@ export default function Contact() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          ...formData,
+          name: formData.name,
+          email: formData.email,
+          phone: `${formData.countryCode}${formData.phoneNumber}`,
+          company: formData.company,
+          service: formData.service,
+          message: formData.message,
           leadType: 'audit_request',
         }),
       });
@@ -39,7 +58,8 @@ export default function Contact() {
         setFormData({
           name: '',
           email: '',
-          phone: '',
+          countryCode: '+91',
+          phoneNumber: '',
           company: '',
           service: '',
           message: '',
@@ -106,7 +126,7 @@ export default function Contact() {
                           value={formData.name}
                           onChange={handleChange}
                           className="w-full bg-background border border-surface-light rounded-lg px-4 py-3 text-foreground focus:outline-none focus:border-primary transition-colors text-sm md:text-base"
-                          placeholder="John Doe"
+                          placeholder="Rahul Sharma"
                         />
                       </div>
                       <div>
@@ -121,7 +141,7 @@ export default function Contact() {
                           value={formData.email}
                           onChange={handleChange}
                           className="w-full bg-background border border-surface-light rounded-lg px-4 py-3 text-foreground focus:outline-none focus:border-primary transition-colors text-sm md:text-base"
-                          placeholder="john@company.com"
+                          placeholder="rahul@company.in"
                         />
                       </div>
                     </div>
@@ -131,15 +151,30 @@ export default function Contact() {
                         <label htmlFor="phone" className="block text-foreground font-medium mb-2 text-sm md:text-base">
                           Phone
                         </label>
-                        <input
-                          type="tel"
-                          id="phone"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          className="w-full bg-background border border-surface-light rounded-lg px-4 py-3 text-foreground focus:outline-none focus:border-primary transition-colors text-sm md:text-base"
-                          placeholder="+1 (555) 000-0000"
-                        />
+                        <div className="flex gap-2">
+                          <select
+                            id="countryCode"
+                            name="countryCode"
+                            value={formData.countryCode}
+                            onChange={handleChange}
+                            className="bg-background border border-surface-light rounded-lg px-3 py-3 text-foreground focus:outline-none focus:border-primary transition-colors text-sm md:text-base min-w-[100px]"
+                          >
+                            {countryCodes.map((country) => (
+                              <option key={`${country.code}-${country.country}`} value={country.code}>
+                                {country.flag} {country.code}
+                              </option>
+                            ))}
+                          </select>
+                          <input
+                            type="tel"
+                            id="phoneNumber"
+                            name="phoneNumber"
+                            value={formData.phoneNumber}
+                            onChange={handleChange}
+                            className="flex-1 bg-background border border-surface-light rounded-lg px-4 py-3 text-foreground focus:outline-none focus:border-primary transition-colors text-sm md:text-base"
+                            placeholder="98765 43210"
+                          />
+                        </div>
                       </div>
                       <div>
                         <label htmlFor="company" className="block text-foreground font-medium mb-2 text-sm md:text-base">
@@ -152,7 +187,7 @@ export default function Contact() {
                           value={formData.company}
                           onChange={handleChange}
                           className="w-full bg-background border border-surface-light rounded-lg px-4 py-3 text-foreground focus:outline-none focus:border-primary transition-colors text-sm md:text-base"
-                          placeholder="Your Company"
+                          placeholder="Your Company Pvt Ltd"
                         />
                       </div>
                     </div>
@@ -253,8 +288,8 @@ export default function Contact() {
                     <span className="text-xl md:text-2xl">📞</span>
                     <div>
                       <h4 className="font-semibold text-foreground mb-1 text-sm md:text-base">Phone</h4>
-                      <a href="tel:7897891020" className="text-foreground/70 hover:text-primary transition-colors text-sm md:text-base">
-                        7897891020
+                      <a href="tel:+917897891020" className="text-foreground/70 hover:text-primary transition-colors text-sm md:text-base">
+                        +91 78978 91020
                       </a>
                     </div>
                   </div>
