@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await supabase!
       .from('admin_settings')
       .select('*');
 
@@ -59,7 +59,7 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await supabase!
       .from('admin_settings')
       .upsert({ key, value })
       .select()

@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Fetch notification email from settings
-    const { data: settings } = await supabase
+    const { data: settings } = await supabase!
       .from('admin_settings')
       .select('key, value')
       .eq('key', 'notification_email')

@@ -210,6 +210,7 @@ export default function Contact() {
                         <option value="customer-acquisition">Customer Acquisition</option>
                         <option value="web-cro">Web & CRO Optimization</option>
                         <option value="analytics">Analytics & Growth</option>
+                        <option value="other">Other</option>
                       </select>
                     </div>
 

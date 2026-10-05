@@ -4,7 +4,7 @@ import { supabase } from '@/lib/supabase';
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const isAuth = await isAdminAuthenticated();
@@ -15,6 +15,7 @@ export async function PATCH(
       );
     }
 
+    const { id } = await params;
     const body = await request.json();
     const { status, notes } = body;
 
@@ -22,10 +23,10 @@ export async function PATCH(
     if (status) updateData.status = status;
     if (notes !== undefined) updateData.notes = notes;
 
-    const { data, error } = await supabase
+    const { data, error } = await supabase!
       .from('leads')
       .update(updateData)
-      .eq('id', params.id)
+      .eq('id', id)
       .select()
       .single();
 
@@ -49,7 +50,7 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const isAuth = await isAdminAuthenticated();
@@ -60,10 +61,12 @@ export async function DELETE(
       );
     }
 
-    const { error } = await supabase
+    const { id } = await params;
+
+    const { error } = await supabase!
       .from('leads')
       .delete()
-      .eq('id', params.id);
+      .eq('id', id);
 
     if (error) {
       console.error('Database error:', error);

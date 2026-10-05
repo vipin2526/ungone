@@ -22,7 +22,7 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    const { error } = await supabase
+    const { error } = await supabase!
       .from('newsletter_subscribers')
       .delete()
       .in('id', subscriberIds);

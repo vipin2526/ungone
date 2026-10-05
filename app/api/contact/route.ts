@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
     if (resend) {
       try {
         // Fetch notification settings from database
-        const { data: settings } = await supabase
+        const { data: settings } = await supabase!
           .from('admin_settings')
           .select('key, value')
           .in('key', ['notification_email', 'notifications_enabled']);

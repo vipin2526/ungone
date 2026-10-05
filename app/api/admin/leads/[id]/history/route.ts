@@ -4,7 +4,7 @@ import { supabase } from '@/lib/supabase';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const isAuth = await isAdminAuthenticated();
@@ -15,10 +15,12 @@ export async function GET(
       );
     }
 
-    const { data, error } = await supabase
+    const { id } = await params;
+
+    const { data, error } = await supabase!
       .from('lead_history')
       .select('*')
-      .eq('lead_id', params.id)
+      .eq('lead_id', id)
       .order('changed_at', { ascending: false });
 
     if (error) {

@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await supabase!
       .from('newsletter_subscribers')
       .select('*')
       .order('subscribed_at', { ascending: false });
