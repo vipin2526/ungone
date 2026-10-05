@@ -51,17 +51,28 @@ export async function POST(request: NextRequest) {
     }
     
     // Send email notification if configured
-    if (resend) {
+    if (resend && supabase) {
       try {
         // Fetch notification settings from database
-        const { data: settings } = await supabase!
+        const { data: settings, error } = await supabase
           .from('admin_settings')
           .select('key, value')
           .in('key', ['notification_email', 'notifications_enabled']);
 
-        const settingsMap = new Map(settings?.map(s => [s.key, s.value]) || []);
-        const notificationsEnabled = settingsMap.get('notifications_enabled') === 'true';
-        const notificationEmail = settingsMap.get('notification_email') || 'ungoneofficial@gmail.com';
+        let notificationsEnabled = true;
+        let notificationEmail = 'ungoneofficial@gmail.com';
+
+        if (error) {
+          if (error.code === 'PGRST205') {
+            console.log('admin_settings table not found, using default settings');
+          } else {
+            console.error('Error fetching settings:', error);
+          }
+        } else {
+          const settingsMap = new Map(settings?.map(s => [s.key, s.value]) || []);
+          notificationsEnabled = settingsMap.get('notifications_enabled') === 'true';
+          notificationEmail = settingsMap.get('notification_email') || 'ungoneofficial@gmail.com';
+        }
 
         if (notificationsEnabled && notificationEmail) {
           const leadTypeLabel = validatedData.leadType === 'audit_request' ? 'Growth Audit Request' : 'Contact Form Submission';

@@ -12,11 +12,19 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    if (!supabase) {
+      console.error('Supabase client not initialized');
+      return NextResponse.json(
+        { error: 'Database not configured' },
+        { status: 500 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status');
     const search = searchParams.get('search');
 
-    let query = supabase!
+    let query = supabase
       .from('leads')
       .select('*')
       .order('created_at', { ascending: false });

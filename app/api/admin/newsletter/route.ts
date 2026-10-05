@@ -12,7 +12,15 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const { data, error } = await supabase!
+    if (!supabase) {
+      console.error('Supabase client not initialized');
+      return NextResponse.json(
+        { error: 'Database not configured' },
+        { status: 500 }
+      );
+    }
+
+    const { data, error } = await supabase
       .from('newsletter_subscribers')
       .select('*')
       .order('subscribed_at', { ascending: false });

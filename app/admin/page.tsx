@@ -31,17 +31,25 @@ export default function AdminDashboard() {
   const [subscribers, setSubscribers] = useState<NewsletterSubscriber[]>([]);
   const [loading, setLoading] = useState(true);
   const [authChecked, setAuthChecked] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch('/api/admin/leads');
+        // Use a dedicated auth check endpoint that doesn't require database
+        const response = await fetch('/api/admin/auth-check');
         if (response.status === 401) {
+          router.push('/admin/login');
+          return;
+        }
+        if (!response.ok) {
+          console.error('Auth check failed:', response.status);
           router.push('/admin/login');
           return;
         }
         setAuthChecked(true);
       } catch (error) {
+        console.error('Auth check error:', error);
         router.push('/admin/login');
         return;
       }
@@ -66,14 +74,21 @@ export default function AdminDashboard() {
       if (leadsRes.ok) {
         const leadsData = await leadsRes.json();
         setLeads(leadsData.leads || []);
+      } else {
+        console.error('Failed to fetch leads:', leadsRes.status, await leadsRes.text());
+        setError('Failed to load leads data');
       }
 
       if (subsRes.ok) {
         const subsData = await subsRes.json();
         setSubscribers(subsData.subscribers || []);
+      } else {
+        console.error('Failed to fetch subscribers:', subsRes.status, await subsRes.text());
+        setError('Failed to load subscriber data');
       }
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
+      setError('Failed to load dashboard data');
     } finally {
       setLoading(false);
     }
@@ -83,6 +98,26 @@ export default function AdminDashboard() {
     return (
       <div className="flex items-center justify-center h-screen">
         <div className="text-zinc-400">Loading...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-center">
+          <div className="text-red-400 mb-4">{error}</div>
+          <button
+            onClick={() => {
+              setError(null);
+              setLoading(true);
+              fetchDashboardData();
+            }}
+            className="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-lg transition-colors"
+          >
+            Retry
+          </button>
+        </div>
       </div>
     );
   }

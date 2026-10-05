@@ -12,12 +12,30 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const { data, error } = await supabase!
+    if (!supabase) {
+      console.error('Supabase client not initialized');
+      return NextResponse.json(
+        { error: 'Database not configured' },
+        { status: 500 }
+      );
+    }
+
+    const { data, error } = await supabase
       .from('admin_settings')
       .select('*');
 
     if (error) {
       console.error('Database error:', error);
+      // Return default settings if table doesn't exist
+      if (error.code === 'PGRST205') {
+        return NextResponse.json({
+          settings: {
+            notification_email: 'ungoneofficial@gmail.com',
+            notifications_enabled: 'true',
+          },
+          warning: 'Using default settings - admin_settings table not found in database'
+        });
+      }
       return NextResponse.json(
         { error: 'Failed to fetch settings' },
         { status: 500 }
@@ -49,6 +67,14 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
+    if (!supabase) {
+      console.error('Supabase client not initialized');
+      return NextResponse.json(
+        { error: 'Database not configured' },
+        { status: 500 }
+      );
+    }
+
     const body = await request.json();
     const { key, value } = body;
 
@@ -59,7 +85,7 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
-    const { data, error } = await supabase!
+    const { data, error } = await supabase
       .from('admin_settings')
       .upsert({ key, value })
       .select()
@@ -67,6 +93,12 @@ export async function PATCH(request: NextRequest) {
 
     if (error) {
       console.error('Database error:', error);
+      if (error.code === 'PGRST205') {
+        return NextResponse.json(
+          { error: 'admin_settings table not found. Please run the schema migration.' },
+          { status: 500 }
+        );
+      }
       return NextResponse.json(
         { error: 'Failed to update setting' },
         { status: 500 }

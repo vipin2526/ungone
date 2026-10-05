@@ -12,6 +12,14 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
+    if (!supabase) {
+      console.error('Supabase client not initialized');
+      return NextResponse.json(
+        { error: 'Database not configured' },
+        { status: 500 }
+      );
+    }
+
     const body = await request.json();
     const { subscriberIds } = body;
 
@@ -22,7 +30,7 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    const { error } = await supabase!
+    const { error } = await supabase
       .from('newsletter_subscribers')
       .delete()
       .in('id', subscriberIds);

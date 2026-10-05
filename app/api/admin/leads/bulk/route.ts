@@ -12,6 +12,14 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
+    if (!supabase) {
+      console.error('Supabase client not initialized');
+      return NextResponse.json(
+        { error: 'Database not configured' },
+        { status: 500 }
+      );
+    }
+
     const body = await request.json();
     const { leadIds, status } = body;
 
@@ -29,7 +37,7 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
-    const { data, error } = await supabase!
+    const { data, error } = await supabase
       .from('leads')
       .update({ status })
       .in('id', leadIds)
@@ -63,6 +71,14 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
+    if (!supabase) {
+      console.error('Supabase client not initialized');
+      return NextResponse.json(
+        { error: 'Database not configured' },
+        { status: 500 }
+      );
+    }
+
     const body = await request.json();
     const { leadIds } = body;
 
@@ -73,7 +89,7 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    const { error } = await supabase!
+    const { error } = await supabase
       .from('leads')
       .delete()
       .in('id', leadIds);

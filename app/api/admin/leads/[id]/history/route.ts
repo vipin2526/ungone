@@ -15,9 +15,17 @@ export async function GET(
       );
     }
 
+    if (!supabase) {
+      console.error('Supabase client not initialized');
+      return NextResponse.json(
+        { error: 'Database not configured' },
+        { status: 500 }
+      );
+    }
+
     const { id } = await params;
 
-    const { data, error } = await supabase!
+    const { data, error } = await supabase
       .from('lead_history')
       .select('*')
       .eq('lead_id', id)

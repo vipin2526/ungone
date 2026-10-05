@@ -20,14 +20,31 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (!supabase) {
+      console.error('Supabase client not initialized');
+      return NextResponse.json(
+        { error: 'Database not configured' },
+        { status: 500 }
+      );
+    }
+
     // Fetch notification email from settings
-    const { data: settings } = await supabase!
+    const { data: settings, error } = await supabase
       .from('admin_settings')
       .select('key, value')
       .eq('key', 'notification_email')
       .single();
 
-    const notificationEmail = settings?.value || 'ungoneofficial@gmail.com';
+    let notificationEmail = 'ungoneofficial@gmail.com';
+    if (error) {
+      if (error.code === 'PGRST205') {
+        console.log('admin_settings table not found, using default email');
+      } else {
+        console.error('Error fetching settings:', error);
+      }
+    } else {
+      notificationEmail = settings?.value || 'ungoneofficial@gmail.com';
+    }
 
     await resend.emails.send({
       from: 'UnGone <onboarding@resend.dev>',

@@ -15,6 +15,14 @@ export async function PATCH(
       );
     }
 
+    if (!supabase) {
+      console.error('Supabase client not initialized');
+      return NextResponse.json(
+        { error: 'Database not configured' },
+        { status: 500 }
+      );
+    }
+
     const { id } = await params;
     const body = await request.json();
     const { status, notes } = body;
@@ -23,7 +31,7 @@ export async function PATCH(
     if (status) updateData.status = status;
     if (notes !== undefined) updateData.notes = notes;
 
-    const { data, error } = await supabase!
+    const { data, error } = await supabase
       .from('leads')
       .update(updateData)
       .eq('id', id)
@@ -61,9 +69,17 @@ export async function DELETE(
       );
     }
 
+    if (!supabase) {
+      console.error('Supabase client not initialized');
+      return NextResponse.json(
+        { error: 'Database not configured' },
+        { status: 500 }
+      );
+    }
+
     const { id } = await params;
 
-    const { error } = await supabase!
+    const { error } = await supabase
       .from('leads')
       .delete()
       .eq('id', id);
